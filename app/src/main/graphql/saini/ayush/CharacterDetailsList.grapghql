@@ -1,0 +1,27 @@
+query CharacterDetailsList(){
+characters(characters: $characters) {
+        info{
+          count,
+          pages
+        },
+        results{
+          id,
+          name,
+          status,
+          species,
+          gender,
+          image,
+          location{
+            name
+          },
+          origin{
+            name
+          },
+          episode{
+            name,
+            episode
+          }
+        }
+      }
+
+}
