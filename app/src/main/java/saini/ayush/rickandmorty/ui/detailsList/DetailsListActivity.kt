@@ -1,23 +1,26 @@
-package saini.ayush.rickandmorty.ui
+package saini.ayush.rickandmorty.ui.detailsList
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 import saini.ayush.rickandmorty.ui.theme.RickAndMortyTheme
 
 class MainActivity : ComponentActivity() {
+
+    private val viewModel: DetailsListViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             RickAndMortyTheme {
-                // A surface container using the 'background' color from the theme
+                val page = viewModel.page
                 Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
+                    Greeting("Rick and Morty: $page")
                 }
             }
         }

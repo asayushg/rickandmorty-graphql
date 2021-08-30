@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
-    id 'kotlin-android'
     id("com.apollographql.apollo").version("2.5.9")
+    id 'kotlin-android'
 }
 
 android {

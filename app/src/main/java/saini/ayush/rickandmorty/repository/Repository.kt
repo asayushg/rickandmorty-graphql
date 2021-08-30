@@ -1,17 +1,16 @@
 package saini.ayush.rickandmorty.repository
 
 import com.apollographql.apollo.ApolloClient
-import com.apollographql.apollo.exception.ApolloException
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.apollographql.apollo.api.Input
+import com.apollographql.apollo.coroutines.await
+import saini.ayush.GetCharactersQuery
 
 
 class Repository {
 
     companion object {
         lateinit var repository: Repository
-        const val BASE_URL = "https://rickandmortyapi.com/graphql"
+        private const val BASE_URL = "https://rickandmortyapi.com/graphql"
 
         fun getInstance(): Repository {
             if (!::repository.isInitialized) {
@@ -20,22 +19,14 @@ class Repository {
             return repository
         }
 
+        private val apolloClient: ApolloClient = ApolloClient.builder()
+            .serverUrl(BASE_URL)
+            .build()
+
     }
 
-    fun getCharacterDetailsList() {
-        CoroutineScope(Dispatchers.IO).launch {
-            val apolloClient = ApolloClient.builder()
-                .serverUrl(BASE_URL)
-                .build()
+    suspend fun getCharacters(page: Int) =
+        apolloClient.query(GetCharactersQuery(Input.fromNullable(page))).await()
 
-       //    val response = try {
-       //        apolloClient.query(
-       //            CharacterDetailsList()
-       //        ).toDeferred().await()
-       //    } catch (e: ApolloException) {
-
-       //    }
-        }
-    }
 
 }
