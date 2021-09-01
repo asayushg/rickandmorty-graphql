@@ -1,4 +1,4 @@
-package saini.ayush.rickandmorty.ui.detailsList
+package saini.ayush.rickandmorty.ui.main.paging_sources
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState

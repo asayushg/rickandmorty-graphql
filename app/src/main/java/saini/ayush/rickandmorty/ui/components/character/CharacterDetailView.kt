@@ -1,4 +1,4 @@
-package saini.ayush.rickandmorty.ui.components
+package saini.ayush.rickandmorty.ui.components.character
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -18,10 +18,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import saini.ayush.fragment.CharacterDetail
-import saini.ayush.rickandmorty.ui.detailsList.DetailsListViewModel
+import saini.ayush.rickandmorty.ui.main.AppViewModel
 
 @Composable
-fun CharacterDetailView(viewModel: DetailsListViewModel, characterId: String, popBack: () -> Unit) {
+fun CharacterDetailView(viewModel: AppViewModel, characterId: String, popBack: () -> Unit) {
     val (character, setCharacter) = remember { mutableStateOf<CharacterDetail?>(null) }
 
     LaunchedEffect(characterId) {

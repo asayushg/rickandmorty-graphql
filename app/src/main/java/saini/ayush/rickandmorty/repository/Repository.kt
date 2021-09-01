@@ -3,8 +3,7 @@ package saini.ayush.rickandmorty.repository
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Input
 import com.apollographql.apollo.coroutines.await
-import saini.ayush.GetCharacterQuery
-import saini.ayush.GetCharactersQuery
+import saini.ayush.*
 
 
 class Repository {
@@ -31,5 +30,17 @@ class Repository {
 
     suspend fun getCharacter(characterId: String) =
         apolloClient.query(GetCharacterQuery(characterId)).await()
+
+    suspend fun getEpisodes(page: Int) =
+        apolloClient.query(GetEpisodesQuery(Input.fromNullable(page))).await()
+
+    suspend fun getEpisode(episodeId: String) =
+        apolloClient.query(GetEpisodeQuery(episodeId)).await()
+
+    suspend fun getLocations(page: Int) =
+        apolloClient.query(GetLocationsQuery(Input.fromNullable(page))).await()
+
+    suspend fun getLocation(locationId: String) =
+        apolloClient.query(GetLocationQuery(locationId)).await()
 
 }

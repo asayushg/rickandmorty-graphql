@@ -1,4 +1,4 @@
-package saini.ayush.rickandmorty.ui.components
+package saini.ayush.rickandmorty.ui.components.episode
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.wrapContentSize
@@ -9,31 +9,28 @@ import androidx.navigation.NavHostController
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import saini.ayush.rickandmorty.ui.Screen
-import saini.ayush.rickandmorty.ui.detailsList.DetailsListViewModel
-
+import saini.ayush.rickandmorty.ui.main.AppViewModel
 
 @Composable
-fun CharactersListView(
-    viewModel: DetailsListViewModel,
+fun EpisodesListView(
+    viewModel: AppViewModel,
     navController: NavHostController,
 ) {
-
-    val lazyCharactersList = viewModel.characters.collectAsLazyPagingItems()
+    val lazyEpisodesList = viewModel.episodes.collectAsLazyPagingItems()
 
     LazyColumn(modifier = Modifier
         .fillMaxSize()
         .wrapContentSize()) {
 
-        items(lazyCharactersList) { character ->
-            character?.let { it1 ->
-                CharactersListItemView(
-                    character = it1,
-                    characterSelected = { characterDetail ->
-                        navController.navigate(Screen.CharactersList.name + "/${characterDetail.id()}")
+        items(lazyEpisodesList) { episode ->
+            episode?.let { it1 ->
+                EpisodeView(
+                    episode = it1,
+                    episodeSelected = {
+                        navController.navigate(Screen.EpisodesList.name + "/${it1.id()}")
                     }
                 )
             }
         }
     }
-
 }
