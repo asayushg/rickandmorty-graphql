@@ -1,43 +1,30 @@
 package saini.ayush.rickandmorty.ui.detailsList
 
-import android.util.Log
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import saini.ayush.GetCharactersQuery
+import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.Flow
+import saini.ayush.fragment.CharacterDetail
 import saini.ayush.rickandmorty.repository.Repository
+
 
 class DetailsListViewModel : ViewModel() {
 
     private val repository = Repository.getInstance()
-    var page = mutableStateOf(1)
 
-    init {
-        getCharacterDetails()
-        Log.d("Characters", "init")
+    val characters: Flow<PagingData<CharacterDetail>> = Pager(PagingConfig(20)) {
+        CharactersPagingSource(repository)
+    }.flow.cachedIn(viewModelScope)
+
+
+    suspend fun getCharacter(characterId: String): CharacterDetail? {
+        val response =  repository.getCharacter(characterId)
+        return response.data?.character()?.fragments()?.characterDetail()
     }
 
-    fun getCharacterDetails() {
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = try {
-                repository.getCharacters(page = 1)
-            } catch (e: Exception) {
-                Log.d("Characters", "getCharacterDetails: $e")
-                return@launch
-            }
-
-            val characters: GetCharactersQuery.Data? = response.data
-
-            if (response.hasErrors() || characters == null) {
-                Log.d("Characters", "getCharacterDetails: ${response.errors}")
-                return@launch
-            }
-
-            Log.d("Characters", "getCharacterDetails: $characters")
-
-        }
-    }
 
 }

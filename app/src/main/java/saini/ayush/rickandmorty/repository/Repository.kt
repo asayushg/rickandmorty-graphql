@@ -3,6 +3,7 @@ package saini.ayush.rickandmorty.repository
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Input
 import com.apollographql.apollo.coroutines.await
+import saini.ayush.GetCharacterQuery
 import saini.ayush.GetCharactersQuery
 
 
@@ -28,5 +29,7 @@ class Repository {
     suspend fun getCharacters(page: Int) =
         apolloClient.query(GetCharactersQuery(Input.fromNullable(page))).await()
 
+    suspend fun getCharacter(characterId: String) =
+        apolloClient.query(GetCharacterQuery(characterId)).await()
 
 }
